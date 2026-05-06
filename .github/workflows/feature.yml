@@ -28,10 +28,9 @@ jobs:
     if: needs.check-ui-changes.outputs.changed == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Install LaTeX
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y texlive-full
+      - uses: xu-cheng/latex-action@v3
+        with:
+          root_file: ui/main.tex
 
       - name: Build CV PDF
         run: |
