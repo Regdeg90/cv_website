@@ -37,6 +37,7 @@ jobs:
         with:
           root_file: CV.tex
           working_directory: ui
+          latexmk_use_xelatex: true
 
       - name: Build CV PDF
         run: |
