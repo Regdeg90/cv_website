@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: xu-cheng/latex-action@v3
         with:
-          root_file: ui/main.tex
+          root_file: ui/CV.tex
 
       - name: Build CV PDF
         run: |
