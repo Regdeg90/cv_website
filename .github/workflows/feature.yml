@@ -28,6 +28,11 @@ jobs:
     if: needs.check-ui-changes.outputs.changed == 'true'
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Show files
+        run: ls -R ui
+
       - uses: xu-cheng/latex-action@v3
         with:
           root_file: ui/CV.tex
