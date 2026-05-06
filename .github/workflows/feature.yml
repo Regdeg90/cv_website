@@ -35,7 +35,7 @@ jobs:
 
       - uses: xu-cheng/latex-action@v3
         with:
-          root_file: ui/CV.tex
+          root_file: CV.tex
           working_directory: ui
 
       - name: Build CV PDF
