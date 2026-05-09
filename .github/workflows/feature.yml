@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - "feature/**"
+
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   check-ui-changes:
     runs-on: ubuntu-latest
@@ -23,8 +28,47 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
 
+  terraform-deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      s3_cv_bucket: ${{ steps.tf.outputs.s3_cv_bucket }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/load-env
+        with:
+          file: ./.github/env/dev.env
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.DEPLOY_ROLE_ARN }}
+          aws-region: eu-north-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        working-directory: terraform
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: terraform
+        run: terraform plan
+
+      - name: Terraform Apply
+        working-directory: terraform
+        run: terraform apply -auto-approve
+
+      - name: Get bucket name
+        id: tf
+        working-directory: terraform
+        run: echo "s3_cv_bucket=$(terraform output -raw bucket_name)" >> "$GITHUB_OUTPUT"
+
   build-cv-pdf:
-    needs: check-ui-changes
+    needs:
+      - check-ui-changes
+      - terraform-deploy
     if: needs.check-ui-changes.outputs.changed == 'true'
     runs-on: ubuntu-latest
     steps:
@@ -36,7 +80,16 @@ jobs:
           working_directory: ui
           latexmk_use_xelatex: true
 
-      - uses: actions/upload-artifact@v4
+      - uses: ./.github/actions/load-env
         with:
-          name: cv-pdf
-          path: ui/CV.pdf
+          file: ./.github/env/dev.env
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.DEPLOY_ROLE_ARN }}
+          aws-region: eu-north-1
+
+      - name: Upload website to S3
+        run: |
+          aws s3 cp ui/CV.pdf s3://${{ needs.terraform-deploy.outputs.s3_cv_bucket }}/CV.pdf
