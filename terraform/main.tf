@@ -1,5 +1,9 @@
 # terraform/main.tf
 
+terraform {
+  backend "s3" {}
+}
+
 resource "aws_s3_bucket" "cv_site" {
   bucket = replace(var.domain_name, ".", "-")
 }

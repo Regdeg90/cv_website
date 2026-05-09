@@ -50,7 +50,11 @@ jobs:
 
       - name: Terraform Init
         working-directory: terraform
-        run: terraform init
+        run: |
+          terraform init \
+            -backend-config="bucket=tf-state-regdeg90" \
+            -backend-config="key=cv-website/${{ env.ENVIRONMENT }}.tfstate" \
+            -backend-config="region=eu-north-1"
 
       - name: Terraform Plan
         working-directory: terraform
