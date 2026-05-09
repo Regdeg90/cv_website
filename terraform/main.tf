@@ -67,6 +67,12 @@ resource "aws_cloudfront_distribution" "cv_site" {
     origin_access_control_id = aws_cloudfront_origin_access_control.cv_site.id
   }
 
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
+
   default_cache_behavior {
     target_origin_id       = "s3-cv-site"
     viewer_protocol_policy = "redirect-to-https"
