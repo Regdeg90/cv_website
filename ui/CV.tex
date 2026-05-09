@@ -1,0 +1,129 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Medium Length Professional CV
+% LaTeX Template
+% Version 2.0 (8/5/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Rishi Shah
+%
+% Important note:
+% This template requires the resume.cls file to be in the same directory as the
+% .tex file. The resume.cls file provides the resume style used for structuring the
+% document.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{resume} % Use the custom resume.cls style
+
+\usepackage[left=0.05in,top=0.05in,right=0.05in,bottom=0.05in]{geometry}
+\usepackage{unicode-math} % Document margins
+\newcommand{\tab}[1]{\hspace{.05\textwidth}\rlap{#1}}
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+\name{Reuben Gedge} % Your name
+
+\address{07766778246 \\ reubengedge@gmail.com \\ https://github.com/Regdeg90} % Your phone number and email
+
+\begin{document}
+    \begin{rSection}{Skills}
+        \begin{description}
+            \item[Languages:] Python, Java, C, C++, Haskell
+            \item[Frameworks \& Tools:]  Django, SQL (Oracle), Kubernetes, Jenkins, Ansible, Terraform
+            \item[Specializations:]  API Development(REST), CI/CD Pipelines, Databases
+        \end{description}
+
+    \end{rSection}
+    \begin{rSection}{Work Experience}
+    {\bf Software Engineer - JPMorgan Chase (Gaia Oracle Services)}
+
+        \textbf{Software Engineer III}  \hfill {\em 2026-Present}
+        \begin{itemize}
+            \item Containerised legacy Django applications to now run on JPMC's internal offering of Kubernetes.
+            \item Re-architected application tech stack to meet SWISS compliance regulations, allowing our application to deploy within SWISS firewall.
+        \end{itemize}
+        \textbf{Software Engineer II}  \hfill {\em 2024-2026}
+        \begin{itemize}
+            \item Designed advanced database access reporting and monitoring across 25,000+ Oracle instances, categorizing access to comply with JPMC's PAM standards, reduced reporting times by over 95\% and decreased storage requirements by 85\%.
+            \item Optimised Django-based API to handle daily reporting of 46.8 million privileges and users.
+            \item Implemented a REST API Just-in-Time (JIT) access solution to provide secure and monitored privileged access during break glass scenarios.
+            \item Supported the infrastructure for over 25 applications deployed on AWS and On-Prem, ensuring 99.99\% availability and compliance with PCI, SOX, and audit standards.
+        \end{itemize}
+        \textbf{Software Engineer I} \hfill {\em 2023-2024}
+        \begin{itemize}
+            % \item Engineered a critical database trigger that mitigated a significant security risk, preventing unauthorized access across 10,000+ databases.
+            \item Enabled SOX compliance by introducing reconciliation in our security drift monitoring API, 99.96\% $\rightarrow$ 99.999\%, for a 240,000 weekly publication volume.
+            \item Modernised 15 Python applications.
+            \begin{itemize}
+                \item Created zero-downtime CI/CD pipelines for seamless application deployment, leveraging automated unit testing and vulnerability scans.
+                \item Python(3.6 $\rightarrow$ 3.11) and Redhat (6 $\rightarrow$ 8) Upgrades.
+                \item Microservice abstractions of previous Python scripts for reusability and scalability.
+            \end{itemize}
+        \end{itemize}
+        \textbf{Consultant} \hfill {\em 2022-2023}
+        \begin{itemize}
+            \item Identified and corrected misconfigured database billing, increasing profits by \$150,000 monthly and created ongoing monitoring via Geneos alerts.
+            \item Led cross-team meetings with critical services in our operations, resolving errors that affected more than 7,000 Oracle databases.
+        \end{itemize}
+
+% Served as a Python Infrastructure Developer, specializing in Cloud and DBMS Platform Services for over 10,000 Oracle based Applications. Leveraged a robust tech stack including Django, Django Rest Framework, and PLSQL on the backend, alongside React and CSS on the frontend. Experienced in CI/CD pipelines using Jules/Jenkins, with a strong focus on performance tuning within Django applications and IAM provisioning and reporting within the Oracle Database ecosystem\\
+% {\bf Tutor} \hfill {\em 2018-2022}
+% \\ Tutored online for Maths and Computing, GCSE and A level.\\
+    \end{rSection}
+    \begin{rSection}{Education}
+
+    {\bf University of Edinburgh} \hfill {\em September 2017 - June 2021}
+        \\ BSc Hons Computer Science: School of Informatics  \hfill {1st Class}
+
+
+    \end{rSection}
+
+%--------------------------------------------------------------------------------
+%    Projects And Seminars
+%-----------------------------------------------------------------------------------------------
+    \begin{rSection}{Projects}
+    {\bf Basic Trading Bot - Python}
+        \\Developed a small-scale cryptocurrency trading bot for the Bittrex trading platform. Implemented a momentum-based strategy and simulated trades using text records, aiming to detect significant price surges before they concluded.  \\
+        \\{\bf Calendar Booking Website - Python - Flask, Vanilla JS, HTML, SQL}\\
+        Developed a booking timetable system for treatment rooms, featuring automated email invoicing and confirmations. Integrated server interactions using SQLAlchemy and deployed the website on Heroku.\\
+% \\{\bf Trolley Assistance Robot - Hardware} \\
+% Led a large-scale team project (10 members) to develop a robot designed to assist users by retrieving requested items. \\
+        \\{\bf University Projects - Java, MIPS, Python, C++}
+        \begin{itemize}
+            \itemsep0em
+            \item Developed a Java-based compiler to translate a subset of C code into MIPS assembly language
+            \item Created a basic search engine using Python
+            \item Designed and implemented a buddy memory allocator and process scheduler in C++
+        \end{itemize}
+
+    \end{rSection}
+
+
+
+%----------------------------------------------------------------------------------------
+%	TECHNICAL STRENGTHS SECTION
+%----------------------------------------------------------------------------------------
+
+
+
+%----------------------------------------------------------------------------------------
+% Extra Curricular
+%----------------------------------------------------------------------------------------
+% \begin{rSection}{Extra-Cirrucular}
+% {\bf Interrail Europe}
+% \\ Summer 2019 - Spent 1 month travelling multiple countries in Europe \\
+% {\bf Compsoc/Sigint (Edinburgh Computer Society/ Edinburgh Cyber Security Society)}
+% \\ Involved in the weekly meetings/presentations that the society puts on about interesting areas of the computing profession. Regularly play ctfs and attend talks by society members on different aspects of security \\
+% {\bf China Volunteering}
+% \\ Summer 2018 - Spent 2 months in China. Volunteered with a Taekwondo martial arts school for a month and then solo travelled in a large loop around China. Managed to learn survival Chinese.\\
+% {\bf Drama Company}
+% \\ 2011-2017 - Performed in yearly shows, including lead parts, of Shakespeare and Scottish plays with the Rhona Mitchell Drama Company. Also optained Grade 8 (Distinction) in LAMDA Verse and Prose and Acting.\\
+
+
+% \end{rSection}
+\end{document}

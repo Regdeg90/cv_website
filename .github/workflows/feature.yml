@@ -1,0 +1,42 @@
+name: Feature Branch
+
+on:
+  push:
+    branches:
+      - "feature/**"
+jobs:
+  check-ui-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.check.outputs.changed }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - id: check
+        run: |
+          if git diff --name-only origin/main...HEAD | grep '^ui/'; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  build-cv-pdf:
+    needs: check-ui-changes
+    if: needs.check-ui-changes.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: xu-cheng/latex-action@v3
+        with:
+          root_file: CV.tex
+          working_directory: ui
+          latexmk_use_xelatex: true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdf
+          path: ui/CV.pdf
