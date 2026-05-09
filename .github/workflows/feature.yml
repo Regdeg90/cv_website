@@ -54,11 +54,11 @@ jobs:
 
       - name: Terraform Plan
         working-directory: terraform
-        run: terraform plan
+        run: terraform plan -var-file="${{ env.ENVIRONMENT }}.tfvars"
 
       - name: Terraform Apply
         working-directory: terraform
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -var-file="${{ env.ENVIRONMENT }}.tfvars"
 
       - name: Get bucket name
         id: tf
