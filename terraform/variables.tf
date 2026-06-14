@@ -9,3 +9,7 @@ variable "hosted_zone_name" {
   type = string
   # example: "example.com"
 }
+
+variable "environment" {
+  type = string
+}
