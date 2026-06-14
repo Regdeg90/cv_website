@@ -153,8 +153,8 @@ resource "aws_dynamodb_table" "cv_stats" {
   }
 }
 
-resource "aws_iam_policy" "dynamodb_access" {
-  name = "${var.environment}-cv-dynamodb-access"
+resource "aws_iam_policy" "dynamodb_access_cv_stats" {
+  name = "${var.environment}-cv-dynamodb-cv-stats-access"
 
   policy = jsonencode({
     Version = "2012-10-17"
