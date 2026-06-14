@@ -96,4 +96,4 @@ jobs:
 
       - name: Upload website to S3
         run: |
-          aws s3 cp ui/* s3://${{ needs.terraform-deploy.outputs.s3_cv_bucket }}
+          aws s3 sync ui/ s3://${{ needs.terraform-deploy.outputs.s3_cv_bucket }}/ --delete
