@@ -1,0 +1,14 @@
+name: Load env
+description: Load environment variables from file
+
+inputs:
+  file:
+    required: true
+    description: The file to load
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        cat "${{ inputs.file }}" >> "$GITHUB_ENV"
