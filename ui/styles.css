@@ -16,7 +16,7 @@ body {
 .cv-container {
     display: flex;
     justify-content: center;
-    padding: 32px 0;
+    padding: 0;
 }
 
 .cv-frame {
