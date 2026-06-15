@@ -5,15 +5,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
 <div class="cv-container">
     <iframe
-            class="cv-frame"
-            src="CV.pdf#zoom=page-width">
+            class="pdf-viewer"
+            src="/pdfjs/web/viewer.html?file=/CV.pdf">
     </iframe>
 </div>
 
 <div class="stats-box">
-    <b>Hi im here </b>
+    Views: <span id="view-count">0</span>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
+<script type="module" src="script.js"></script>
+
 </body>
 </html>
