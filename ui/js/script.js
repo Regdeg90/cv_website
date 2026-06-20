@@ -1,5 +1,5 @@
 async function updateViewCount() {
-    const response = await fetch(`${window.APP_CONFIG.apiBaseUrl}/views`, {
+    const response = await fetch(`${window.APP_CONFIG.apiBaseUrl}views`, {
         method: "POST"
     });
 
