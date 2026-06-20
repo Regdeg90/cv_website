@@ -180,6 +180,12 @@ resource "aws_iam_policy" "dynamodb_access_cv_stats" {
 resource "aws_apigatewayv2_api" "cv_api" {
   name          = "cv-api"
   protocol_type = "HTTP"
+
+  cors_configuration {
+    allow_origins = ["*"]
+    allow_methods = ["POST", "OPTIONS"]
+    allow_headers = ["Content-Type"]
+  }
 }
 
 resource "aws_apigatewayv2_integration" "view_counter" {
