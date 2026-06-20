@@ -6,6 +6,9 @@ dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(os.environ["TABLE_NAME"])
 
 def lambda_handler(event, context):
+    print("DEPLOYED VERSION: id-key-v1")
+    print("TABLE_NAME:", os.environ["TABLE_NAME"])
+    print("KEY:", {"id": "VIEW_COUNT"})
     response = table.update_item(
         Key={
             "id": "VIEW_COUNT",
