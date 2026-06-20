@@ -78,8 +78,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Package Lambdas
+      working-directory: ui
       run: |
-        for dir in ui/lambda/*/; do
+        for dir in lambda/*/; do
           echo "Packaging $dir"
         
           (
