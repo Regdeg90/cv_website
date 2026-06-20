@@ -107,7 +107,7 @@ jobs:
       - name: Replace JS Config
         run: |
           sed -i \
-            "s|__BASE_API_URL__|${{ steps.terraform.outputs.base_api_url }}|g" \
+            "s|__BASE_API_URL__|${{ steps.terraform-deploy.outputs.base_api_url }}|g" \
             ui/js/config.js
 
       - name: Configure AWS credentials
