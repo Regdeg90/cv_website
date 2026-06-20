@@ -8,8 +8,7 @@ table = dynamodb.Table(os.environ["TABLE_NAME"])
 def lambda_handler(event, context):
     response = table.update_item(
         Key={
-            "PK": "STATS",
-            "SK": "VIEW_COUNT"
+            "PK": "VIEW_COUNT",
         },
         UpdateExpression="ADD view_count :inc",
         ExpressionAttributeValues={
