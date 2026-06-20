@@ -92,6 +92,8 @@ jobs:
             cd "$dir"
             rm -f lambda.zip
             zip -r lambda.zip .
+            ls -ltr
+            pwd
           )
         done
 
