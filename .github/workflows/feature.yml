@@ -59,6 +59,7 @@ jobs:
             -backend-config="region=eu-north-1"
 
       - name: Debug Lambda Zip
+        working-directory: terraform
         run: |
           pwd
           ls -la ../ui/lambda/view_counter
