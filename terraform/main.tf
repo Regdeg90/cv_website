@@ -179,7 +179,7 @@ resource "aws_iam_policy" "dynamodb_access_cv_stats" {
 ### API ###
 resource "aws_apigatewayv2_api" "cv_api" {
   name          = "cv-api"
-  protocol_type = "HTTPS"
+  protocol_type = "HTTP"
 }
 
 resource "aws_apigatewayv2_integration" "view_counter" {
@@ -245,8 +245,8 @@ resource "aws_lambda_function" "view_counter" {
   handler       = "handler.lambda_handler"
   runtime       = "python3.12"
 
-  filename         = "../lambda/view-counter/lambda.zip"
-  source_code_hash = filebase64sha256("../lambda/view-counter/lambda.zip")
+  filename         = "../ui/lambda/view_counter/lambda.zip"
+  source_code_hash = filebase64sha256("../ui/lambda/view_counter/lambda.zip")
 
   environment {
     variables = {
