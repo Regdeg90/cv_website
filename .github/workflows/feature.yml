@@ -77,6 +77,8 @@ jobs:
   package-lambdas:
     runs-on: ubuntu-latest
     steps:
+    - name: Where am I
+      run: ls -ltra
     - name: Package Lambdas
       working-directory: ui
       run: |
