@@ -84,6 +84,7 @@ jobs:
     - name: Package Lambdas
       working-directory: ui
       run: |
+        ls -ltra
         for dir in lambda/*/; do
           echo "Packaging $dir"
         
