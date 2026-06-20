@@ -77,6 +77,8 @@ jobs:
   package-lambdas:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
+
     - name: Where am I
       run: ls -ltra
     - name: Package Lambdas
