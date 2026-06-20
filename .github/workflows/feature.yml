@@ -47,6 +47,19 @@ jobs:
           role-to-assume: ${{ env.DEPLOY_ROLE_ARN }}
           aws-region: eu-north-1
 
+      - name: Package Lambdas
+        working-directory: ui
+        run: |
+          for dir in lambda/*/; do
+            echo "Packaging $dir"
+
+            (
+              cd "$dir"
+              rm -f lambda.zip
+              zip -r lambda.zip .
+            )
+          done
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
@@ -57,12 +70,6 @@ jobs:
             -backend-config="bucket=tf-state-regdeg90" \
             -backend-config="key=cv-website/${{ env.ENVIRONMENT }}.tfstate" \
             -backend-config="region=eu-north-1"
-
-      - name: Debug Lambda Zip
-        working-directory: terraform
-        run: |
-          pwd
-          ls -la ../ui/lambda/view_counter
 
       - name: Terraform Plan
         working-directory: terraform
@@ -78,30 +85,6 @@ jobs:
         run: |
           echo "s3_cv_bucket=$(terraform output -raw bucket_name)" >> "$GITHUB_OUTPUT"
           echo "base_api_url=$(terraform output -raw base_api_url)" >> "$GITHUB_OUTPUT"
-
-
-  package-lambdas:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Where am I
-      run: ls -ltra
-    - name: Package Lambdas
-      working-directory: ui
-      run: |
-        ls -ltra
-        for dir in lambda/*/; do
-          echo "Packaging $dir"
-        
-          (
-            cd "$dir"
-            rm -f lambda.zip
-            zip -r lambda.zip .
-            ls -ltr
-            pwd
-          )
-        done
 
   build-cv-pdf:
     needs:
