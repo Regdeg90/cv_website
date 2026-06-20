@@ -58,6 +58,11 @@ jobs:
             -backend-config="key=cv-website/${{ env.ENVIRONMENT }}.tfstate" \
             -backend-config="region=eu-north-1"
 
+      - name: Debug Lambda Zip
+        run: |
+          pwd
+          ls -la ../ui/lambda/view_counter
+
       - name: Terraform Plan
         working-directory: terraform
         run: terraform plan -var-file="${{ env.ENVIRONMENT }}.tfvars"
