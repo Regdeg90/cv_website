@@ -72,7 +72,7 @@ jobs:
           echo "base_api_url=$(terraform output -raw base_api_url)" >> "$GITHUB_OUTPUT"
 
 
-  setup-lambda:
+  package-lambdas:
     runs-on: ubuntu-latest
     steps:
     - name: Package Lambdas
@@ -91,7 +91,7 @@ jobs:
     needs:
       - check-ui-changes
       - terraform-deploy
-      - setup-lamda
+      - package-lambdas
     if: needs.check-ui-changes.outputs.changed == 'true'
     runs-on: ubuntu-latest
     steps:
