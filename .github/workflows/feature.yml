@@ -32,6 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       s3_cv_bucket: ${{ steps.tf.outputs.s3_cv_bucket }}
+      base_api_url: ${{ steps.tf.outputs.base_api_url }}
     steps:
       - uses: actions/checkout@v4
 
