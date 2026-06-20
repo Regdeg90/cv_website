@@ -64,15 +64,34 @@ jobs:
         working-directory: terraform
         run: terraform apply -auto-approve -var-file="${{ env.ENVIRONMENT }}.tfvars"
 
-      - name: Get bucket name
+      - name: Set TF Outputs to ENV
         id: tf
         working-directory: terraform
-        run: echo "s3_cv_bucket=$(terraform output -raw bucket_name)" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "s3_cv_bucket=$(terraform output -raw bucket_name)" >> "$GITHUB_OUTPUT"
+          echo "base_api_url=$(terraform output -raw base_api_url)" >> "$GITHUB_OUTPUT"
+
+
+  setup-lambda:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Package Lambdas
+      run: |
+        for dir in lambda/*/; do
+          echo "Packaging $dir"
+        
+          (
+            cd "$dir"
+            rm -f lambda.zip
+            zip -r lambda.zip .
+          )
+        done
 
   build-cv-pdf:
     needs:
       - check-ui-changes
       - terraform-deploy
+      - setup-lamda
     if: needs.check-ui-changes.outputs.changed == 'true'
     runs-on: ubuntu-latest
     steps:
@@ -87,6 +106,12 @@ jobs:
       - uses: ./.github/actions/load-env
         with:
           file: ./.github/env/dev.env
+
+      - name: Replace JS Config
+        run: |
+          sed -i \
+            "s|__BASE_API_URL__|${{ steps.terraform.outputs.base_api_url }}|g" \
+            ui/config.js
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4

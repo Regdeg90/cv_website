@@ -174,3 +174,83 @@ resource "aws_iam_policy" "dynamodb_access_cv_stats" {
     ]
   })
 }
+
+
+### API ###
+resource "aws_apigatewayv2_api" "cv_api" {
+  name          = "cv-api"
+  protocol_type = "HTTPS"
+}
+
+resource "aws_apigatewayv2_integration" "view_counter" {
+  api_id                 = aws_apigatewayv2_api.cv_api.id
+  integration_type       = "AWS_PROXY"
+  integration_uri        = aws_lambda_function.view_counter.invoke_arn
+  payload_format_version = "2.0"
+}
+
+resource "aws_apigatewayv2_route" "views" {
+  api_id    = aws_apigatewayv2_api.cv_api.id
+  route_key = "POST /views"
+
+  target = "integrations/${aws_apigatewayv2_integration.view_counter.id}"
+}
+
+resource "aws_apigatewayv2_stage" "default" {
+  api_id      = aws_apigatewayv2_api.cv_api.id
+  name        = "$default"
+  auto_deploy = true
+}
+
+
+
+#### LAMDA FUNCTIONS ####
+resource "aws_iam_role" "lambda_exec" {
+  name = "lambda-exec"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "basic" {
+  role       = aws_iam_role.lambda_exec.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_role_policy_attachment" "dynamodb" {
+  role       = aws_iam_role.lambda_exec.name
+  policy_arn = aws_iam_policy.dynamodb_access_cv_stats.arn
+}
+
+resource "aws_lambda_permission" "api_gateway" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.view_counter.function_name
+  principal     = "apigateway.amazonaws.com"
+}
+
+resource "aws_lambda_function" "view_counter" {
+  function_name = "${var.environment}-view-counter"
+  role          = aws_iam_role.lambda_exec.arn
+  handler       = "handler.lambda_handler"
+  runtime       = "python3.12"
+
+  filename         = "../lambda/view-counter/lambda.zip"
+  source_code_hash = filebase64sha256("../lambda/view-counter/lambda.zip")
+
+  environment {
+    variables = {
+      TABLE_NAME = aws_dynamodb_table.cv_stats.name
+    }
+  }
+}
