@@ -22,26 +22,25 @@
 
 \documentclass{resume} % Use the custom resume.cls style
 
-\usepackage[left=0.05in,top=0.05in,right=0.05in,bottom=0.05in]{geometry}
-\usepackage{unicode-math} % Document margins
+\usepackage[left=0.5in,top=0.5in,right=0.5in,bottom=0.5in]{geometry}
+\usepackage{unicode-math}
+\usepackage{hyperref} % Document margins
 \newcommand{\tab}[1]{\hspace{.2\textwidth}\rlap{#1}}
 \newcommand{\itab}[1]{\hspace{2em}\rlap{#1}}
 \name{Reuben Gedge} % Your name
 
-\address{07766778246 \\ reubengedge@gmail.com \\ https://github.com/Regdeg90} % Your phone number and email
+\address{07766778246 \\ reubengedge@gmail.com \\ https://github.com/Regdeg90 \\ https://cv.regdeg90.com/} % Your phone number and email
 
 \begin{document}
     \begin{rSection}{Skills}
         \begin{description}
-            \item[Languages:] Python, Java, C, C++, Haskell
-            \item[Frameworks \& Tools:]  Django, SQL (Oracle), Kubernetes, Jenkins, Ansible, Terraform
-            \item[Specializations:]  API Development(REST), CI/CD Pipelines, Databases
+            \item [Languages:] Python, Java, C, C++, Haskell, SQL
+            \item [Frameworks \& Tools:] Django, Oracle, Kubernetes, Jenkins, Ansible, Terraform, AWS, Lamda
+            \item [Specialisms:]: Backend Engineering, Infrastructure, REST API Development, CI/CD Pipelines, Databases
         \end{description}
-
     \end{rSection}
     \begin{rSection}{Work Experience}
     {\bf Software Engineer - JPMorgan Chase (Gaia Oracle Services)}
-
         \textbf{Software Engineer III}  \hfill {\em 2026-Present}
         \begin{itemize}
             \item Containerised legacy Django applications to now run on JPMC's internal offering of Kubernetes.
@@ -57,7 +56,6 @@
         \end{itemize}
         \textbf{Software Engineer I} \hfill {\em 2023-2024}
         \begin{itemize}
-            % \item Engineered a critical database trigger that mitigated a significant security risk, preventing unauthorized access across 10,000+ databases.
             \item Enabled SOX compliance by introducing reconciliation in our security drift monitoring API, 99.96\% $\rightarrow$ 99.999\%, for a 240,000 weekly publication volume.
             \item Modernised 15 Python applications.
             \begin{itemize}
@@ -77,11 +75,8 @@
 % \\ Tutored online for Maths and Computing, GCSE and A level.\\
     \end{rSection}
     \begin{rSection}{Education}
-
     {\bf University of Edinburgh} \hfill {\em September 2017 - June 2021}
         \\ BSc Hons Computer Science: School of Informatics  \hfill {1st Class}
-
-
     \end{rSection}
 
 %--------------------------------------------------------------------------------
