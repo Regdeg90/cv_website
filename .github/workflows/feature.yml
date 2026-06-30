@@ -32,6 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       s3_cv_bucket: ${{ steps.tf.outputs.s3_cv_bucket }}
+      base_api_url: ${{ steps.tf.outputs.base_api_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -44,6 +45,19 @@ jobs:
         with:
           role-to-assume: ${{ env.DEPLOY_ROLE_ARN }}
           aws-region: eu-north-1
+
+      - name: Package Lambdas
+        working-directory: ui
+        run: |
+          for dir in lambda/*/; do
+            echo "Packaging $dir"
+
+            (
+              cd "$dir"
+              rm -f lambda.zip
+              zip -r lambda.zip .
+            )
+          done
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -64,10 +78,12 @@ jobs:
         working-directory: terraform
         run: terraform apply -auto-approve -var-file="${{ env.ENVIRONMENT }}.tfvars"
 
-      - name: Get bucket name
+      - name: Set TF Outputs to ENV
         id: tf
         working-directory: terraform
-        run: echo "s3_cv_bucket=$(terraform output -raw bucket_name)" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "s3_cv_bucket=$(terraform output -raw bucket_name)" >> "$GITHUB_OUTPUT"
+          echo "base_api_url=$(terraform output -raw base_api_url)" >> "$GITHUB_OUTPUT"
 
   build-cv-pdf:
     needs:
@@ -88,6 +104,12 @@ jobs:
         with:
           file: ./.github/env/dev.env
 
+      - name: Replace JS Config
+        run: |
+          sed -i \
+            "s|__BASE_API_URL__|${{ needs.terraform-deploy.outputs.base_api_url }}|g" \
+            ui/js/config.js
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -96,4 +118,4 @@ jobs:
 
       - name: Upload website to S3
         run: |
-          aws s3 cp ui/CV.pdf s3://${{ needs.terraform-deploy.outputs.s3_cv_bucket }}/CV.pdf
+          aws s3 sync ui/ s3://${{ needs.terraform-deploy.outputs.s3_cv_bucket }}/ --delete
