@@ -289,10 +289,9 @@ resource "aws_iam_role_policy" "subscribe_lambda_sns" {
 
 resource "aws_lambda_function" "subscribe" {
   function_name = "${var.environment}-cv-subscribe"
-
   role    = aws_iam_role.lambda_exec.arn
+  handler = "handler.lambda_handler"
   runtime = "python3.12"
-  handler = "lambda_function.lambda_handler"
 
   filename = "../ui/lambda/subscribe/lambda.zip"
   source_code_hash = filebase64sha256("../ui/lambda/subscribe/lambda.zip")
