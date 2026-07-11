@@ -266,6 +266,11 @@ resource "aws_lambda_function" "view_counter" {
 
 resource "aws_sns_topic" "cv_updates" {
   name = "${var.environment}-cv-updates"
+  environment {
+    variables = {
+      SNS_TOPIC_ARN = aws_sns_topic.cv_updates.arn
+    }
+  }
 }
 
 resource "aws_iam_role_policy" "subscribe_lambda_sns" {
@@ -287,11 +292,7 @@ resource "aws_iam_role_policy" "subscribe_lambda_sns" {
   })
 }
 
-environment {
-  variables = {
-    SNS_TOPIC_ARN = aws_sns_topic.cv_updates.arn
-  }
-}
+
 
 {
   Effect = "Allow"
