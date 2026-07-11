@@ -34,6 +34,7 @@ jobs:
       s3_cv_bucket: ${{ steps.tf.outputs.s3_cv_bucket }}
       base_api_url: ${{ steps.tf.outputs.base_api_url }}
       cv_updates_topic_arn: ${{ steps.tf.outputs.cv_updates_topic_arn }}
+      website_url: ${{ steps.tf.outputs.website_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -86,6 +87,7 @@ jobs:
           echo "s3_cv_bucket=$(terraform output -raw bucket_name)" >> "$GITHUB_OUTPUT"
           echo "base_api_url=$(terraform output -raw base_api_url)" >> "$GITHUB_OUTPUT"
           echo "cv_updates_topic_arn=$(terraform output -raw cv_updates_topic_arn)" >> "$GITHUB_OUTPUT"
+          echo "website_url=$(terraform output -raw website_url)" >> "$GITHUB_OUTPUT"
 
   build-cv-pdf:
     needs:
@@ -127,4 +129,4 @@ jobs:
           aws sns publish \
             --topic-arn "${{ needs.terraform-deploy.outputs.cv_updates_topic_arn }}" \
             --subject "Reuben's CV has been updated" \
-            --message "My CV website has been updated. View the latest version at ${{ needs.terraform-deploy.outputs.base_api_url }}"
+            --message "My CV website has been updated. View the latest version at ${{ needs.terraform-deploy.outputs.website_url }}"
