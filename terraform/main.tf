@@ -291,13 +291,3 @@ resource "aws_iam_role_policy" "subscribe_lambda_sns" {
     ]
   })
 }
-
-
-
-{
-  Effect = "Allow"
-  Action = [
-    "sns:Publish"
-  ]
-  Resource = aws_sns_topic.cv_updates.arn
-}

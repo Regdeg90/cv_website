@@ -13,9 +13,3 @@ variable "hosted_zone_name" {
 variable "environment" {
   type = string
 }
-
-environment {
-  variables = {
-    SNS_TOPIC_ARN = aws_sns_topic.cv_updates.arn
-  }
-}
