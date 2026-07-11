@@ -261,3 +261,42 @@ resource "aws_lambda_function" "view_counter" {
     }
   }
 }
+
+### Subscription Infrastructure ###
+
+resource "aws_sns_topic" "cv_updates" {
+  name = "${var.environment}-cv-updates"
+}
+
+resource "aws_iam_role_policy" "subscribe_lambda_sns" {
+  name = "${var.environment}-subscribe-lambda-sns"
+  role = aws_iam_role.lambda_exec.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "sns:Subscribe"
+        ]
+        Resource = aws_sns_topic.cv_updates.arn
+      }
+    ]
+  })
+}
+
+environment {
+  variables = {
+    SNS_TOPIC_ARN = aws_sns_topic.cv_updates.arn
+  }
+}
+
+{
+  Effect = "Allow"
+  Action = [
+    "sns:Publish"
+  ]
+  Resource = aws_sns_topic.cv_updates.arn
+}

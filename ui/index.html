@@ -12,6 +12,27 @@
     </iframe>
 </div>
 
+<form id="subscribe-form" class="subscribe-form">
+    <label for="subscriber-email">
+        Get notified when my CV is updated
+    </label>
+
+    <div class="subscribe-controls">
+        <input
+                id="subscriber-email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                maxlength="254"
+                required
+        >
+
+        <button type="submit">Subscribe</button>
+    </div>
+
+    <p id="subscribe-status" aria-live="polite"></p>
+</form>
+
 <div class="stats-box">
     Views: <span id="view-count">...</span>
 </div>
