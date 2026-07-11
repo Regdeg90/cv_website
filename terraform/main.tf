@@ -295,10 +295,7 @@ resource "aws_lambda_function" "subscribe" {
   handler = "lambda_function.lambda_handler"
 
   filename = "../ui/lambda/subscribe/lambda.zip"
-
-  source_code_hash = filebase64sha256(
-    "../ui/lambda/subscribe/lambda.zip"
-  )
+  source_code_hash = filebase64sha256("../ui/lambda/subscribe/lambda.zip")
 
   timeout     = 10
   memory_size = 128

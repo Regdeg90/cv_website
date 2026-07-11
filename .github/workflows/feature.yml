@@ -125,6 +125,6 @@ jobs:
       - name: Notify CV subscribers
         run: |
           aws sns publish \
-            --topic-arn "${{ steps.terraform.outputs.cv_updates_topic_arn }}" \
+            --topic-arn "${{ needs.terraform-deploy.outputs.cv_updates_topic_arn }}" \
             --subject "Reuben's CV has been updated" \
             --message "My CV website has been updated. View the latest version at ${{ needs.terraform-deploy.outputs.base_api_url }}"
