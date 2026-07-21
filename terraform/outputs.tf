@@ -11,3 +11,7 @@ output "website_url" {
 output "base_api_url" {
   value = aws_apigatewayv2_stage.default.invoke_url
 }
+
+output "cv_updates_topic_arn" {
+  value = aws_sns_topic.cv_updates.arn
+}

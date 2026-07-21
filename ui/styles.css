@@ -26,3 +26,51 @@ body {
     background: white;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
+
+.subscribe-box {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    z-index: 1000;
+
+    width: 240px;
+    padding: 16px;
+
+    background: white;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.subscribe-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.subscribe-box label {
+    font-weight: 600;
+}
+
+.subscribe-box input,
+.subscribe-box button {
+    padding: 8px;
+    font-size: 14px;
+}
+
+.subscribe-box button {
+    cursor: pointer;
+}
+
+#subscribe-status {
+    margin: 0;
+    font-size: 13px;
+}
+
+@media (max-width: 700px) {
+    .subscribe-box {
+        position: static;
+        width: auto;
+        margin: 12px;
+    }
+}
